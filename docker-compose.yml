@@ -1,10 +1,9 @@
 version: "2.2"
 services:
   sftp:
-    build: .
     image: atmoz/sftp
     volumes: 
-      - /code:/home/foo/upload/
+      - ./:/home/foo/upload/
     command: foo:pass:::upload
     ports:
       - "2222:22"
