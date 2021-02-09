@@ -1,6 +1,6 @@
 import json
 import os
-import pysftp
+#import pysftp
 
 def get_data_from_json(curr_dir_path, name1, name2):
     """
@@ -42,9 +42,9 @@ def main():
     customer = "Williams-Williams"
     customer_insights_today = mine_customer_ids(customer, events_today, our_insights)
     write_to_output(customer_insights_today)
-    with pysftp.Connection(host="foo@localhost", username="foo", password="pass", log="./temp/pysftp.log") as sftp:
-        sftp.cwd('/home/foo/upload')  # The full path
-        sftp.put('/home/foo/upload/customer_insights_today.json')  # Upload the file
+    #with pysftp.Connection(host="foo@localhost", username="foo", password="pass", log="./temp/pysftp.log") as sftp:
+    #    sftp.cwd('/home/foo/upload')  # The full path
+    #    sftp.put('/home/foo/upload/customer_insights_today.json')  # Upload the file
 
 if __name__=="__main__":
     main()
