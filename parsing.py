@@ -1,7 +1,8 @@
 import json
 import os
-#import pysftp
-
+import paramiko
+import datetime as datetime
+import time
 def get_data_from_json(curr_dir_path, name1, name2):
     """
     reads input from json file
@@ -42,9 +43,16 @@ def main():
     customer = "Williams-Williams"
     customer_insights_today = mine_customer_ids(customer, events_today, our_insights)
     write_to_output(customer_insights_today)
-    #with pysftp.Connection(host="foo@localhost", username="foo", password="pass", log="./temp/pysftp.log") as sftp:
-    #    sftp.cwd('/home/foo/upload')  # The full path
-    #    sftp.put('/home/foo/upload/customer_insights_today.json')  # Upload the file
+    today=time.strftime('%Y%m%d')
+    ssh_client=paramiko.SSHClient()
+    ssh_client.load_system_host_keys()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh_client.connect(hostname="localhost", username="foo",password="pass", port=2222)
+    sftp_client=ssh_client.open_sftp()
+    sftp_client.mkdir("/upload/upload"+str(today))
+    sftp_client.put("customer_event_ids.json","/upload/upload"+str(today)+"/customer_event_ids.json")
+    sftp_client.close()
+    ssh_client.close()
 
 if __name__=="__main__":
     main()
